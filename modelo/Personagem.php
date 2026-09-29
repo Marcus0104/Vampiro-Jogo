@@ -12,6 +12,16 @@ class Personagem implements IPersonagem
     protected int $vidaMax;
     protected bool $defendendo = false;
 
+    public function __construct(string $nome, int $vida, int $forca, int $defesa, Arma $arma)
+    {
+        $this->nome = $nome;
+        $this->vida = $vida;
+        $this->vidaMax = $vida;
+        $this->forca = $forca;
+        $this->defesa = $defesa;
+        $this->arma = $arma;
+    }
+    
     public function atacar(Personagem $alvo)
     {
         $dano = $this->forca + $this->arma->getDano() - $alvo->getDefesa();
