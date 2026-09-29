@@ -2,6 +2,6 @@
 
 interface IPersonagem
 {
-    public function atacar();
+    public function atacar(Personagem $alvo);
     public function defender();
 }
