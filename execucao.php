@@ -6,15 +6,6 @@ require_once("modelo/MagoAtk.php");
 require_once("modelo/Demonio.php");
 require_once("modelo/Rei.php");
 
-function lerTexto(): string
-{
-    $linha = readline();
-    if ($linha === false) {
-        exit;
-    }
-    return trim($linha);
-}
-
 // MENU DE STATUS
 function mostrarStatus(Vampiro $vampiro, Personagem $inimigo)
 {
@@ -101,7 +92,7 @@ print "O Rei exterminou seu cla. Voce e o ultimo vampiro.\n";
 print "Derrote todos os guardas e acabe com o Rei!\n\n";
 
 print "Nome do seu vampiro: ";
-$nome = lerTexto();
+$nome = readline();
 if ($nome == "") {
     $nome = "Alucard";
 }
