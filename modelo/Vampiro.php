@@ -61,7 +61,7 @@ class Vampiro extends Magico
 
     public function novoTurno()
     {
-        parent::novoTurno(); //Executa também o novoTurno() que existe na classe pai *Personagem*.
+        $this->defendendo = false;
         $this->sede = $this->vida < $this->vidaMax / 2;
     }
 
