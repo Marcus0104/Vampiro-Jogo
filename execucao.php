@@ -103,7 +103,7 @@ print "Derrote todos os guardas e acabe com o Rei!\n\n";
 print "Nome do seu vampiro: ";
 $nome = lerTexto();
 if ($nome == "") {
-    $nome = "Vlad";
+    $nome = "Alucard";
 }
 
 $adaga = new Arma("Adaga de Sangue", 5, "não sei");
