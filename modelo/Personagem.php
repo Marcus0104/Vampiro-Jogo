@@ -57,12 +57,7 @@ class Personagem implements IPersonagem
         }
         return $dano;
     }
-
-    public function novoTurno()
-    {
-        $this->defendendo = false;
-    }
-
+    
     public function getNome(): string
     {
         return $this->nome;
