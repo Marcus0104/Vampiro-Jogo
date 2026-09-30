@@ -98,7 +98,7 @@ if ($nome == "") {
 }
 
 $adaga = new Arma("Adaga de Sangue", 5, "não sei");
-$vampiro = new Vampiro($nome, 100, 10, 3, $adaga, 50, 15);
+$vampiro = new Vampiro($nome, 100, 10, 3, $adaga);
 
 $inimigos = [
     new Templario("Templario", 50, 8, 4, new Arma("Espada Sagrada", 4, "não sei")),
