@@ -3,15 +3,18 @@ require_once("Magico.php");
 
 class MagoAtk extends Magico
 {
-    private string $elemento;
+    private array $elemento = ['Fogo', 'Agua'];
     private float $danoMagico;
 
-    public function getElemento(): string
+    public function __construct() {
+
+    }
+    public function getElemento(): array
     {
         return $this->elemento;
     }
 
-    public function setElemento(string $elemento): self
+    public function setElemento(array $elemento): self
     {
         $this->elemento = $elemento;
 

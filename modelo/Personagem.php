@@ -57,7 +57,12 @@ class Personagem implements IPersonagem
         }
         return $dano;
     }
-    
+
+    public function novoTurno()
+    {
+        $this->defendendo = false;
+    }
+
     public function getNome(): string
     {
         return $this->nome;
@@ -105,7 +110,12 @@ class Personagem implements IPersonagem
 
         return $this;
     }
+    public function setVida(int $vida): self
+    {
+        $this->vida = $vida;
 
+        return $this;
+    }
     public function getVida(): int
     {
         return $this->vida;
