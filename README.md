@@ -1,8 +1,8 @@
 # Vampiro-Jogo
 RPG por turnos para o terminal, feito em PHP com Orientação a Objetos.
 
-> O Rei exterminou seu clã.
-> Você é o último vampiro.
+> O Rei exterminou seu clã.<br>
+> Você é o último vampiro.<br>
 > Derrote todos os guardas e acabe com o Rei!
 
 # 📖 Sobre o jogo
