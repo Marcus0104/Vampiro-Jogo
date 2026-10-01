@@ -3,24 +3,25 @@ require_once("Personagem.php");
 
 class Templario extends Personagem
 {
-    public function amedrontar(Personagem $alvo)
+
+    public function golpeSagrado(Personagem $alvo): void
     {
-        $alvo->setForca($alvo->getForca() - 2);
-        print $this->nome . " amedronta " . $alvo->getNome() . "! (-2 de forca)\n";
+        $dano = $this->ataque + $this->bonusAtaque + $this->arma->getDano() + 3;
+ 
+        if ($alvo instanceof Vampiro && $alvo->getFormaAtual() == 1) {
+            $dano += 4;
+        }
+ 
+        $alvo->tomarDano($dano);
+        print $this->nome . " usa GOLPE SAGRADO! " . $dano . " de dano (ignora defesa)!\n";
     }
 
-    public function posturaDefensiva()
+    public function agir(Personagem $alvo, int $turno): void
     {
-        $this->defesa = $this->defesa + 3;
-        print $this->nome . " assume postura defensiva! (+3 de defesa)\n";
-    }
-
-    public function usarEspecial(Personagem $alvo)
-    {
-        if ($this->vida < $this->vidaMax / 2) {
-            $this->posturaDefensiva();
+        if ($turno % 3 == 0) {
+            $this->golpeSagrado($alvo);
         } else {
-            $this->amedrontar($alvo);
+            $this->atacar($alvo);
         }
     }
 }

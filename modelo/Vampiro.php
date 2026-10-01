@@ -3,37 +3,47 @@ require_once("Magico.php");
 
 class Vampiro extends Magico
 {
-    private int $formaAtual = 0; // 0 = humana. 1 = besta
-    private bool $sede = false;
+    private int $manaMax = 50;
+    private int $formaAtual = 0;
+    private int $nivel = 1;
 
+    public function getMana(): int
+    {
+        return $this->mana;
+    }
+    public function getManaMax(): int
+    {
+        return $this->manaMax;
+    }
+    public function getFormaAtual(): int
+    {
+        return $this->formaAtual;
+    }
+
+    public function temSede(): bool
+    {
+        return $this->vida < $this->vidaMax * 0.3;
+    }
     public function drenarAura(Personagem $alvo): bool
     {
         if ($this->mana < 20) {
             print "Mana insuficiente!\n";
             return false;
         }
+
         $this->mana -= 20;
+        $dano = 12;
+        $alvo->tomarDano($dano);
 
-        $dano = $this->poder * 2 - $alvo->getDefesa();
-        if ($dano < 1) {
-            $dano = 1;
+        $cura = intdiv($dano, 2);
+        if ($this->temSede()) {
+            $cura = $dano;
         }
-        $danoCausado = $alvo->receberDano($dano);
+        $this->ganharVida($cura);
 
-        if ($this->sede) {
-            $cura = $danoCausado;
-        } else {
-            $cura = (int)($danoCausado / 2);
-        }
-        $this->vida += $cura;
-        if ($this->vida > $this->vidaMax) {
-            $this->vida = $this->vidaMax;
-        }
-
-        print $this->nome . " drena a aura de " . $alvo->getNome() . ": causa " . $danoCausado . " de dano e recupera " . $cura . " de vida.\n";
+        print $this->nome . " drena a aura de " . $alvo->getNome() . ": " . $dano . " de dano e +" . $cura . " de vida!\n";
         return true;
     }
-
     public function transformar(): bool
     {
         if ($this->formaAtual == 0) {
@@ -41,64 +51,35 @@ class Vampiro extends Magico
                 print "Mana insuficiente!\n";
                 return false;
             }
-
             $this->mana -= 10;
             $this->formaAtual = 1;
-            $this->forca += 6;
+            $this->ataque += 5;
             $this->defesa -= 2;
-
-            print $this->nome . " vira uma besta! (+6 forca, -2 defesa)\n";
-
+            print $this->nome . " vira uma besta! (+ataque, -defesa)\n";
         } else {
             $this->formaAtual = 0;
-            $this->forca = $this->forca - 6;
-            $this->defesa = $this->defesa + 2;
-
-            print $this->nome . " volta para a forma humana.\n";
+            $this->ataque -= 5;
+            $this->defesa += 2;
+            print $this->nome . " volta ao normal.\n";
         }
         return true;
     }
 
-    public function novoTurno()
+    public function recuperarMana(): void
     {
-        parent::novoTurno(); //Executa também o novoTurno() que existe na classe pai *Personagem*.
-        $this->sede = $this->vida < $this->vidaMax / 2;
+        $this->mana = min($this->manaMax, $this->mana + 20);
+        print $this->nome . " medita e recupera mana.\n";
     }
 
-    public function subirNivel()
+    public function subirNivel(): void
     {
-        $this->vidaMax += 10;
-        $this->forca += 2;
+        $this->nivel++;
+        $this->vidaMax += 15;
+        $this->ataque += 2;
         $this->defesa += 1;
-        $this->poder += 3;
-        $this->manaMax += 5;
-        $this->vida = $this->vidaMax;
+        $this->manaMax += 10;
         $this->mana = $this->manaMax;
-
-        print $this->nome . " subiu de nivel e se recuperou por completo!\n";
-    }
-
-    public function getFormaAtual(): int
-    {
-        return $this->formaAtual;
-    }
-
-    public function setFormaAtual(int $formaAtual): self
-    {
-        $this->formaAtual = $formaAtual;
-
-        return $this;
-    }
-
-    public function isSede(): bool
-    {
-        return $this->sede;
-    }
-
-    public function setSede(bool $sede): self
-    {
-        $this->sede = $sede;
-
-        return $this;
+        $this->ganharVida(rand(25, (int)($this->vidaMax / 2)));
+        print "\n*** " . $this->nome . " subiu para o nivel " . $this->nivel . "! ***\n";
     }
 }

@@ -3,40 +3,16 @@ require_once("Personagem.php");
 
 class Magico extends Personagem
 {
-    protected int $manaMax;
-    protected float $mana;
-    protected string $poder;
+    protected int $mana = 50;
 
-    public function recuperarMana() {
-        if ($this->mana == 100) {
-            print("Sua mana já esta cheia");
-        }
-        else{
-            $this->mana = 100;
-            print("Sua mana foi recuperada");
-        }
-    }
-  
-    public function getMana(): float
+    public function getMana(): int
     {
         return $this->mana;
     }
 
-    public function setMana(float $mana): self
+    public function setMana(int $mana): self
     {
         $this->mana = $mana;
-
-        return $this;
-    }
-
-    public function getPoder(): float
-    {
-        return $this->poder;
-    }
-
-    public function setPoder(float $poder): self
-    {
-        $this->poder = $poder;
 
         return $this;
     }

@@ -1,8 +1,14 @@
 <?php
-class Arma{
+class Arma
+{
     private string $nome;
-    private float $dano;
-    
+    private int $dano;
+
+    public function __construct(string $nome, int $dano)
+    {
+        $this->nome = $nome;
+        $this->dano = $dano;
+    }
 
     public function getNome(): string
     {
@@ -16,12 +22,12 @@ class Arma{
         return $this;
     }
 
-    public function getDano(): float
+    public function getDano(): int
     {
         return $this->dano;
     }
 
-    public function setDano(float $dano): self
+    public function setDano(int $dano): self
     {
         $this->dano = $dano;
 

@@ -3,33 +3,22 @@ require_once("Magico.php");
 
 class MagoAtk extends Magico
 {
-    private array $elemento = ['Fogo', 'Agua'];
-    private float $danoMagico;
-
-    public function __construct() {
-
-    }
-    public function getElemento(): array
+    public function bolaDeFogo(Personagem $alvo): void
     {
-        return $this->elemento;
+        $this->mana -= 20;
+ 
+        $dano = $this->ataque + $this->bonusAtaque + $this->arma->getDano() + 5;
+        $alvo->tomarDano($dano);
+        print $this->nome . " conjura BOLA DE FOGO! " . $dano . " de dano (ignora defesa)!\n";
     }
-
-    public function setElemento(array $elemento): self
+ 
+    public function agir(Personagem $alvo, int $turno): void
     {
-        $this->elemento = $elemento;
-
-        return $this;
-    }
-
-    public function getDanoMagico(): float
-    {
-        return $this->danoMagico;
-    }
-
-    public function setDanoMagico(float $danoMagico): self
-    {
-        $this->danoMagico = $danoMagico;
-
-        return $this;
+        if ($turno % 2 == 0 && $this->mana >= 20) {
+            $this->bolaDeFogo($alvo);
+        } else {
+            $this->atacar($alvo);
+            $this->mana = min(50, $this->mana + 5);
+        }
     }
 }

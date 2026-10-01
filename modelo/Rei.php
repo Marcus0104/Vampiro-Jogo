@@ -3,42 +3,43 @@ require_once("Personagem.php");
 
 class Rei extends Personagem
 {
-    private bool $autoridade = true;
+    private bool $furia = false;
 
-    public function invocarTropas(Personagem $alvo)
+    public function decretoReal(Personagem $alvo): void
     {
-        $dano = $alvo->receberDano(15);
-        print "O Rei invoca as tropas reais! Flechas causam " . $dano . " de dano em " . $alvo->getNome() . "!\n";
+        $dano = $this->ataque + $this->bonusAtaque + $this->arma->getDano() + 4;
+        $alvo->tomarDano($dano);
+        print $this->nome . " profere o DECRETO REAL! " . $dano . " de dano (ignora defesa)!\n";
     }
 
-    public function usarEspecial(Personagem $alvo)
+    public function agir(Personagem $alvo, int $turno): void
     {
-        $this->invocarTropas($alvo);
-    }
-
-    public function receberDano(int $dano): int
-    {
-        if ($this->autoridade) {
-            $dano = (int)($dano * 0.75);
+        if (!$this->furia && $this->vida < $this->vidaMax * 0.5) {
+            $this->furia = true;
+            $this->ataque += 4;
+            print "\n" . $this->nome . " solta um rugido: a coroa racha e ele entra em FURIA!\n\n";
         }
-        $danoRecebido = parent::receberDano($dano); //Chama o metodo da classe pai
 
-        if ($this->autoridade and $this->vida < $this->vidaMax / 2) {
-            $this->autoridade = false;
-            $this->forca += 5;
-            print "A coroa do Rei racha! Ele perde a autoridade e entra em furia! (+5 de forca)\n";
+        $intervalo = 3;
+        if ($this->furia) {
+            $intervalo = 2;
         }
-        return $danoRecebido;
+
+        if ($turno % $intervalo == 0) {
+            $this->decretoReal($alvo);
+        } else {
+            $this->atacar($alvo);
+        }
     }
 
-    public function isAutoridade(): bool
+    public function isFuria(): bool
     {
-        return $this->autoridade;
+        return $this->furia;
     }
 
-    public function setAutoridade(bool $autoridade): self
+    public function setFuria(bool $furia): self
     {
-        $this->autoridade = $autoridade;
+        $this->furia = $furia;
 
         return $this;
     }
