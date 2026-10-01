@@ -1,4 +1,4 @@
-# Vampiro-Jogo
+# VAMPIRO: A QUEDA DO REI
 RPG por turnos para o terminal, feito em PHP com Orientação a Objetos.
 
 > O Rei exterminou seu clã.<br>
