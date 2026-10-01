@@ -16,6 +16,6 @@ Se o Rei cair, você vence.
 PHP
 Programação Orientada a Objetos (herança, encapsulamento e polimorfismo)
 
-#👤 Autores
+# 👤 Autores
 
 Desenvolvido por <a href='https://github.com/Marcus0104'>Marcus</a> e <a href='https://github.com/NickollasKaiky'>Nickollas</a>.
